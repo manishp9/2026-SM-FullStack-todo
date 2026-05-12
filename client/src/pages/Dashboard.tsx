@@ -103,7 +103,7 @@ export default function TodoAppUI() {
 
   const fetchTodos = async () => {
     try {
-      const response = await fetch("http://localhost:3000/todo-list");
+      const response = await (`${import.meta.env.VITE_API_URL}/todo-list`);
       const data = await response.json();
       setTask(data.todo);
     } catch (error) {
@@ -114,7 +114,7 @@ export default function TodoAppUI() {
   const createTodo = async () => {
     if (!createTask.title.trim()) return;
     try {
-      const response = await fetch("http://localhost:3000/todo-list", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/todo-list`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -140,7 +140,7 @@ export default function TodoAppUI() {
   const toggleComplete = useCallback(
     async (taskId: string, currentState: boolean) => {
       try {
-        await fetch(`http://localhost:3000/todo-list/${taskId}`, {
+        await fetch(`${import.meta.env.VITE_API_URL}/todo-list/${taskId}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ completed: !currentState }),
@@ -160,7 +160,7 @@ export default function TodoAppUI() {
   // ✅ Fix #3: Delete handler
   const deleteTask = useCallback(async (taskId: string) => {
     try {
-      await fetch(`http://localhost:3000/todo-list/${taskId}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/todo-list/${taskId}`, {
         method: "DELETE",
       });
       setTask((prev) => prev.filter((t) => t._id !== taskId));
@@ -173,7 +173,7 @@ export default function TodoAppUI() {
   const toggleStar = useCallback(
     async (taskId: string, currentState: boolean) => {
       try {
-        await fetch(`http://localhost:3000/todo-list/${taskId}`, {
+        await fetch(`${import.meta.env.VITE_API_URL}/todo-list/${taskId}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ starred: !currentState }),
